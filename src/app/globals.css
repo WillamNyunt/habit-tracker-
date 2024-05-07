@@ -12,6 +12,7 @@
   --h3-font-size: 1.45rem;
   --theme-light-blue: 219, 236, 242;
   --theme-light-purple: 219, 219, 242;
+  --h1-margin-bottom: 1.5em;
 }
 
 
@@ -39,6 +40,7 @@ body::before {
 
 h1 {
   font-size: var(--h1-font-size);
+  margin-bottom: var(--h1-margin-bottom);
 }
 
 h2 {
@@ -47,4 +49,16 @@ h2 {
 
 h3 {
   font-size: var(--h3-font-size);
+}
+
+button.button-text {
+  color: rgb(37, 37, 37);
+}
+
+button.button-primary {
+  background: rgb(255, 255, 255);
+  color: rgb(7, 7, 7);
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  font-weight: 700;
 }

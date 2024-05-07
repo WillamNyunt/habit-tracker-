@@ -1,9 +1,11 @@
+import classes from './card.module.css';
 
-
-const Card : React.FC<{children : React.ReactNode}> = ({children}) => {
+const Card : React.FC<{children : React.ReactNode, className? : string | null}> = ({children, className}) => {
     return (
-        <div className='w-full flex bg-slate-300'>
+        <div className={`${className} ${classes.card} w-full flex bg-white`}>
             {children}
         </div>
     )
 }
+
+export default Card;
