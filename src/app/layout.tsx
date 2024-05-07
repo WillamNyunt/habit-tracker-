@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import Navigation from "../../public/components/navigation";
+import Modal from "../../public/components/ui/modal";
 
 const RobotoFont = Roboto({ weight: "400", subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={RobotoFont.className + " flex flex-row min-h-screen"}>
         <Navigation />
+        <Modal />
         <main className="flex min-h-screen flex-col p-8  w-full">
           {children}
         </main>
