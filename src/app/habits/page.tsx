@@ -10,8 +10,8 @@ export default function HabitsPage() {
         <Card className="col-span-2">
           <div className="flex w-full justify-between">
             <h2>Habits</h2>
-            <Link href="?modal=true">
-            <button className="button-primary">Add habit</button>
+            <Link href="?modal=true&type=habit">
+            <button className="button-primary">Add</button>
             </Link>
           </div>
         </Card>

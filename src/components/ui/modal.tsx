@@ -1,5 +1,5 @@
 "use client";
-import { useSearchParams, usePathname } from "next/navigation";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import classes from "./modal.module.css";
 import AddHabit from "../forms/AddHabit";
@@ -7,7 +7,14 @@ import AddHabit from "../forms/AddHabit";
 function Modal() {
   const searchParams = useSearchParams();
   const modal = searchParams.get("modal");
-  const pathname = usePathname();
+  const type = searchParams.get("type");
+  const pathName = usePathname();
+  const router = useRouter();
+
+  function closeModal() {
+    router.push(pathName);
+  }
+
   return (
     <>
       {modal && (
@@ -15,12 +22,7 @@ function Modal() {
           <dialog open className={classes.modal}>
             <div className="bg-white m-auto p-8">
               <div className="flex flex-col items-center">
-                <AddHabit />
-                <Link href={pathname}>
-                  <button type="button" className="bg-red-500 text-white p-2">
-                    Close Modal
-                  </button>
-                </Link>
+                {type === 'habit' && <AddHabit handleModalClose={closeModal} />}
               </div>
             </div>
           </dialog>
