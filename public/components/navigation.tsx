@@ -1,16 +1,20 @@
+import Link from "next/link"
+import classes from './navigation.module.css'
+
 export default function Navigation() {
     return (
-        <aside>
-            <nav className=" ">
+        <aside className={classes.aside}>
+            <nav>
                 <ul>
                     <li>
-                        <a href="/">Habits</a>
+                        <Link href='/'>
+                            <p>Habit Tracker</p>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/about">About</a>
-                    </li>
-                    <li>
-                        <a href="/contact">Contact</a>
+                        <Link href='/habits'>
+                            <p>Habits</p>
+                        </Link>
                     </li>
                 </ul>
             </nav>
