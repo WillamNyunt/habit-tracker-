@@ -18,7 +18,7 @@ export default function Navigation() {
                     </li>
                     <li>
                         <Link href='/habits'>
-                            <p className={`${classes['nav-button']}  ${pathname === '/habits' ? classes['active-link'] : ''}`}>Habits</p>
+                            <p className={`${classes['nav-button']}  ${pathname === '/habits' ? classes['active-link'] : ''}`}>All Habits</p>
                         </Link>
                     </li>
                     <li>

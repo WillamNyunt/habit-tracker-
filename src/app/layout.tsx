@@ -3,7 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Navigation from "../../public/components/navigation";
 
-const RobotoFont = Roboto({weight: '400', subsets: ['latin']});
+const RobotoFont = Roboto({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,9 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={RobotoFont.className + ' flex flex-row min-h-screen'}>
+      <body className={RobotoFont.className + " flex flex-row min-h-screen"}>
         <Navigation />
-        {children}</body>
+        <main className="flex min-h-screen flex-col p-8  w-full">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
