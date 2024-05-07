@@ -1,5 +1,32 @@
 .aside {
     padding: 10px;
-    min-width: 336px;
-    background-color: black;
+    min-width: 280px;
+    background: rgb(250, 250, 250);
+    color: black;
 }
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 100;
+    color: black;
+    text-transform: uppercase;
+    margin-bottom: 2em;
+}
+
+.nav {
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+}
+
+.nav-button {
+    padding: 0.5em;
+    border-radius: 0.5em;
+    color: rgb(83, 83, 83);
+    text-decoration: none;
+    background: linear-gradient(238, 238, 238);
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 0.5em;
+}
+
+/* rgb(28, 25, 34); */
