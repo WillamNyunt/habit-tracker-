@@ -29,4 +29,7 @@
     margin-bottom: 0.5em;
 }
 
-/* rgb(28, 25, 34); */
+.active-link {
+    background: rgb(var(--theme-light-blue));
+    color: black;
+}

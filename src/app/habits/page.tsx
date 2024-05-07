@@ -5,7 +5,7 @@ export default function HabitsPage() {
 
     return (
         <h1>
-           This is a habits page. 
+           Habits
         </h1>
     )
 }

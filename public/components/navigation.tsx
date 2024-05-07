@@ -1,7 +1,12 @@
+'use client'
 import Link from "next/link"
 import classes from './navigation.module.css'
+import { usePathname } from 'next/navigation'
+
 
 export default function Navigation() {
+    const pathname = usePathname()
+
     return (
         <aside className={classes.aside}>
             <nav className={classes.nav}>
@@ -13,12 +18,12 @@ export default function Navigation() {
                     </li>
                     <li>
                         <Link href='/habits'>
-                            <p className={classes['nav-button']}>Habits</p>
+                            <p className={`${classes['nav-button']}  ${pathname === '/habits' ? classes['active-link'] : ''}`}>Habits</p>
                         </Link>
                     </li>
                     <li>
                         <Link href='/habits'>
-                            <p className={classes['nav-button']}>Track</p>
+                            <p className={`${classes['nav-button']}  ${pathname === '/track' ? classes['active-link'] : ''}`}>Track</p>
                         </Link>
                     </li>
                     <li>
