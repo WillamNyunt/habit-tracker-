@@ -20,11 +20,9 @@ function Modal() {
       {modal && (
         <div className={classes.backdrop}>
           <dialog open className={classes.modal}>
-            <div className="bg-white m-auto p-8">
               <div className="flex flex-col items-center">
                 {type === 'habit' && <AddHabit handleModalClose={closeModal} />}
               </div>
-            </div>
           </dialog>
         </div>
       )}
