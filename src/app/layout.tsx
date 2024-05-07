@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import Navigation from "../../public/components/navigation";
-import Modal from "../../public/components/ui/modal";
+import Navigation from "../components/navigation";
+import Modal from "../components/ui/modal";
 
 const RobotoFont = Roboto({ weight: "400", subsets: ["latin"] });
 

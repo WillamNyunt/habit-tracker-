@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../../public/components/ui/card";
+import Card from "../../components/ui/card";
 import Link from "next/link";
 
 export default function HabitsPage() {

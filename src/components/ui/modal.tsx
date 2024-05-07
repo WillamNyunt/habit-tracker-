@@ -2,6 +2,7 @@
 import { useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import classes from "./modal.module.css";
+import AddHabit from "../forms/AddHabit";
 
 function Modal() {
   const searchParams = useSearchParams();
@@ -14,8 +15,7 @@ function Modal() {
           <dialog open className={classes.modal}>
             <div className="bg-white m-auto p-8">
               <div className="flex flex-col items-center">
-                <h3>Add habits</h3>
-                <br />
+                <AddHabit />
                 <Link href={pathname}>
                   <button type="button" className="bg-red-500 text-white p-2">
                     Close Modal
