@@ -1,17 +1,17 @@
 import { useFormState } from "react-dom";
-import { addHabit } from "@/lib/actions";
+import { addHabitAction } from "@/lib/actions";
 
 interface AddHabitFormProps {
   handleModalClose: () => void;
 }
 
 export default function AddHabitForm(props: AddHabitFormProps) {
-  const [state, formAction] = useFormState(addHabit, { message: "" });
+  const [state, formAction] = useFormState(addHabitAction, { message: "" });
   return (
     <form className="flex flex-col gap-3 w-full" action={formAction}>
       <h2>Add habit</h2>
       <input type="text" name="name" placeholder="Name" />
-      {state.message && <p>{state.message}</p>}
+      {state?.message && <p>{state.message}</p>}
       <div className="flex justify-between mt-3">
       <button
         type="button"
