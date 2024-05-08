@@ -1,7 +1,6 @@
 import sql from "better-sqlite3";
 import xss from "xss";
 import slugify from "slugify";
-import fs from "node:fs";
 
 const db = sql("habits.db");
 
@@ -9,8 +8,25 @@ export async function getHabits() {
   return db.prepare("SELECT * FROM habits").all();
 }
 
+export async function getHabitById(id: string) {
+  console.log(id)
+  return db.prepare("SELECT * FROM habits WHERE id = ?").get(id);
+}
+
 export async function saveHabitDb(data: { name: string }) {
   const slug = slugify(data.name, { lower: true });
   const stmt = db.prepare("INSERT INTO habits (name, slug) VALUES (?, ?)");
   stmt.run(xss(data.name), slug);
 }
+
+export async function editHabitDb(data: { name: string; id: string }) {
+  //check if habit exists
+  const habit = getHabitById(data.id);
+  if (!habit) {
+    throw new Error("Habit not found");
+  }
+  const slug = slugify(data.name, { lower: true });
+  const stmt = db.prepare("UPDATE habits SET name = ?, slug = ? WHERE id = ?");
+  stmt.run(xss(data.name), slug, data.id);
+}
+
