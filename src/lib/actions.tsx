@@ -1,6 +1,6 @@
 'use server'
 
-import { saveHabitDb, editHabitDb, getHabitById } from "./habits"
+import { saveHabitDb, editHabitDb, getHabitById, deleteHabitDb, getHabits } from "./habits"
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
@@ -42,4 +42,17 @@ export async function getHabitByIdAction(id: string) {
         return { message: "Id is required" }
     }
     return await getHabitById(id)
+}
+
+export async function getHabitsAction() {
+    return await getHabits()
+}
+
+export async function deleteHabitByIdAction(id: string) {
+    if (!id) {
+        return { message: "Id is required" }
+    }
+    await deleteHabitDb(id)
+    revalidatePath('/habits')
+    redirect('/habits')
 }

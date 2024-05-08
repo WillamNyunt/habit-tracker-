@@ -20,7 +20,6 @@ export async function saveHabitDb(data: { name: string }) {
 }
 
 export async function editHabitDb(data: { name: string; id: string }) {
-  //check if habit exists
   const habit = getHabitById(data.id);
   if (!habit) {
     throw new Error("Habit not found");
@@ -30,3 +29,7 @@ export async function editHabitDb(data: { name: string; id: string }) {
   stmt.run(xss(data.name), slug, data.id);
 }
 
+export async function deleteHabitDb(id: string) {
+  const stmt = db.prepare("DELETE FROM habits WHERE id = ?");
+  stmt.run(id);
+}
