@@ -1,8 +1,8 @@
 "use client";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
 import classes from "./modal.module.css";
 import AddHabit from "../forms/AddHabit";
+import EditHabitForm from "../forms/EditHabit";
 
 function Modal() {
   const searchParams = useSearchParams();
@@ -21,7 +21,8 @@ function Modal() {
         <div className={classes.backdrop}>
           <dialog open className={classes.modal}>
               <div className="flex flex-col items-center">
-                {type === 'habit' && <AddHabit handleModalClose={closeModal} />}
+                {type === 'add-habit' && <AddHabit handleModalClose={closeModal} />}
+                {type === 'edit-habit' && <EditHabitForm handleModalClose={closeModal} />}
               </div>
           </dialog>
         </div>
