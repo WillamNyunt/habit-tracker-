@@ -48,7 +48,7 @@ export async function getHabitsAction() {
     return await getHabits()
 }
 
-export async function deleteHabitByIdAction(id: string) {
+export async function deleteHabitByIdAction(id: string) : Promise<{ message: string | null }> {
     if (!id) {
         return { message: "Id is required" }
     }

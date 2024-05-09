@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { getHabits } from '@/lib/habits';
-import HabitsDeleteBtn from './habitsDeleteBtn';
+import DeleteBtn from '../../components/deleteBtn';
+import { deleteHabitByIdAction } from '@/lib/actions';
 
 async function Habits() {
     const habits : any =  await getHabits();
-    console.log(habits)
-  
+
     return (
       <>
        {habits.map ((habit : any) => (
@@ -14,7 +14,7 @@ async function Habits() {
             <Link href={`?modal=true&type=edit-habit&id=${habit.id}`}>
             <button className="button-primary">Edit</button>
             </Link>
-            <HabitsDeleteBtn id={habit.id} />
+            <DeleteBtn deleteFn={deleteHabitByIdAction} id={habit.id} />
           </div>
         ))}
       </>
