@@ -15,8 +15,14 @@ function ToolTip({
   return <div className={className} style={style}>{children}</div>;
 }
 
-export default function CalenadarHeaTMap() {
-  const may = new MonthMap(12, 2024);
+/**
+ * 
+ * @returns {React.ReactElement} returns a calendar heatmap component
+ * @param {number} month - month of the year in format M (1-12)
+ * @param {number} year - year in format YYYY
+ */
+export default function CalenadarHeaTMap({month, year}: {month: number, year: number}) : React.ReactElement {
+  const may = new MonthMap(month, year);
   const daysOfWeek = may.dayArr;
   return (
     <Card>
