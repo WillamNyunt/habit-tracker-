@@ -10,33 +10,42 @@ var MonthMap = /** @class */ (function () {
     };
     MonthMap.prototype.getNumberOfWeeks = function () {
         var daysInMonth = this.getDaysInMonth();
-        var firstDayOfWeekOne = this.firstDayOfWeekOne;
-        var daysLeft = daysInMonth - (7 - firstDayOfWeekOne);
-        return Math.ceil(daysLeft / 7) + 1;
+        return Math.ceil(daysInMonth / 7);
     };
     MonthMap.prototype.getLastDayOfMonth = function () {
         return new Date(this.firstDay.getFullYear(), this.firstDay.getMonth() + 1, 0).getDate();
     };
-    MonthMap.prototype.interateThroughWeek = function () {
+    MonthMap.prototype.getFirstDayOfTheMonth = function () {
+        return this.firstDay.getDay();
+    };
+    /**
+    * This function will iterate through the days of the month and return an array of dates
+    */
+    MonthMap.prototype.getDaysOfMonthArray = function () {
         var month = [];
-        for (var i = 0; i < this.getNumberOfWeeks(); i++) {
-            var week = [];
-            for (var j = 1; j < 8; j++) {
-                if (j < this.firstDayOfWeekOne && i == 0) {
-                    week.push('');
-                }
-                else if ((i === (this.getNumberOfWeeks() - 1)) && (j > (this.lastDayOfMonth + this.firstDayOfWeekOne) % 7 - 1)) {
-                    week.push('');
-                }
-                else {
-                    week.push(this.dayArr[j - 1]);
-                }
-            }
-            month.push(week);
+        for (var i = 1; i < this.getDaysInMonth() + 1; i++) {
+            var date = new Date("".concat(this.firstDay.getFullYear(), "-").concat(this.firstDay.getMonth() + 1, "-").concat(i));
+            month.push(date);
         }
         return month;
     };
+    MonthMap.prototype.formMonthDayMatrix = function () {
+        var _this = this;
+        var Month = this.getDaysOfMonthArray();
+        var matrix = [];
+        Month.forEach(function (day, index) {
+            if (index % 7 === 0) {
+                matrix.push({ day: _this.dayArr[day.getDay()],
+                    date: day });
+            }
+            else {
+                matrix.push({ day: _this.dayArr[day.getDay()],
+                    date: day });
+            }
+        });
+        return matrix;
+    };
     return MonthMap;
 }());
-var may = new MonthMap(6, 2024);
-console.log(may.interateThroughWeek());
+var may = new MonthMap(1, 2024);
+console.log(may.formMonthDayMatrix());
