@@ -10,7 +10,7 @@ async function Habits() {
   return (
     <div className="grid grid-cols-3 gap-2">
       {habits.map((habit: any) => (
-        <Card key={habit.id} className="flex align-middle">
+        <Card key={habit.habit_id} className="flex align-middle">
           <div className="flex justify-between w-full">
             <span className="flex items-center">{habit.name}</span>
             <div className="flex justify-end">

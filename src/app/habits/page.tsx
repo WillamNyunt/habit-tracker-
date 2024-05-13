@@ -21,7 +21,7 @@ export default function HabitsPage() {
         </Card>
         <Card className='flex flex-col'>
           <h2 className="mb-5">Monthly record</h2>
-          <CalenadarHeaTMap />
+          <CalenadarHeaTMap month={5} year={2024} />
         </Card>
       </div>
     </>

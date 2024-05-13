@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { getHabits } from '@/lib/habits';
 import DeleteBtn from '../../components/deleteBtn';
 import { deleteHabitByIdAction } from '@/lib/actions';
-import Card from '@/components/ui/card';
-import CalenadarHeaTMap from '@/components/CalendarHeatMap';
 
 async function Habits() {
     const habits : any =  await getHabits();
