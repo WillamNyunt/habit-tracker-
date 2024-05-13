@@ -79,7 +79,7 @@ const TrackDay: React.FC<{}> = async () => {
               color={time.color}
               textColor={time.textColor}
             />
-            <HabitCheckGrid habits={time.habits} />
+            <HabitCheckGrid habits={time.habits} date='2024-05-13'/>
           </div>
         ))}
       </div>

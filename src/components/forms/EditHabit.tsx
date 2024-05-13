@@ -12,12 +12,14 @@ interface Habits {
   name: string;
   id: string;
   slug: string;
+  time_of_day: string;
 }
 
 const EditHabitForm: React.FC<EditHabitFormProps> = (props) => {
   const [formState, formAction] = useFormState(editHabitAction, {
     message: "",
   });
+
   const searchParams = useSearchParams();
   const id = searchParams.get("id") as string;
 
@@ -27,7 +29,7 @@ const EditHabitForm: React.FC<EditHabitFormProps> = (props) => {
   useEffect(() => {
     async function fetchHabit() {
       const habit = (await getHabitByIdAction(id)) as Habits;
-      console.log
+      console.log(habit)
       if (!habit) {
         return;
       } 
@@ -35,7 +37,7 @@ const EditHabitForm: React.FC<EditHabitFormProps> = (props) => {
         nameInputRef.current.value = habit.name;
       }
       if (timeOfDayInputRef.current) {
-        timeOfDayInputRef.current.value = habit.time_of_day;
+        timeOfDayInputRef.current.value = habit.time_of_day ? habit.time_of_day : "all";
       }
     }
     fetchHabit();
