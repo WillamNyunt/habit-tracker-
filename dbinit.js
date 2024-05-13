@@ -17,4 +17,8 @@ function dbInit2(){
     db.prepare('ALTER TABLE habits ADD COLUMN time_of_day TEXT').run();
 }
 
-dbInit();
+function dbInit3(){
+    db.prepare('CREATE TABLE IF NOT EXISTS HabitChecks (check_id INTEGER PRIMARY KEY, habit_id INTEGER, check_date TEXT, notes TEXT, FOREIGN KEY (habit_id) REFERENCES habits (habit_id))').run();
+}
+
+dbInit3();

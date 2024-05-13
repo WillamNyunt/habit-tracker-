@@ -4,6 +4,7 @@ import ColourfulTitle from "./ui/colourfulTitle";
 import { getHabits } from "@/lib/habits";
 import { habitColors, habitTitleColor } from "@/lib/config";
 import HabitCheckGrid from "./habitCheckGrid";
+import moment from "moment";
 
 interface Habit {
   name: string;
@@ -64,6 +65,9 @@ const TrackDay: React.FC<{}> = async () => {
     }
   });
 
+  const today = new Date();
+  const todayFormatted = moment(today).format("YYYY-MM-DD");
+
   return (
     <Card className="flex flex-col rounded">
       <h2 className="mb-5">Today</h2>
@@ -79,7 +83,7 @@ const TrackDay: React.FC<{}> = async () => {
               color={time.color}
               textColor={time.textColor}
             />
-            <HabitCheckGrid habits={time.habits} date='2024-05-13'/>
+            <HabitCheckGrid habits={time.habits} date={todayFormatted} />
           </div>
         ))}
       </div>

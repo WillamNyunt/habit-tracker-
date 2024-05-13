@@ -10,7 +10,7 @@ const HabitCheckGrid: React.FC<HabitCheckGridProps> = async ({
   habits,
   date,
 }) => {
-  console.log(date);
+  console.log(date)
   const dateHabit = await getHabitChecksByDateAction(date) as any[];
   console.log(dateHabit);
 
