@@ -10,7 +10,15 @@ export default function AddHabitForm(props: AddHabitFormProps) {
   return (
     <form className="flex flex-col gap-3 w-full" action={formAction}>
       <h2>Add habit</h2>
+      <label htmlFor="name">Name</label>
       <input type="text" name="name" placeholder="Name" />
+      <label htmlFor="time_of_day">Time of day</label>
+      <select name="time_of_day">
+        <option value="all">All</option>
+        <option value="morning">Morning</option>
+        <option value="afternoon">Afternoon</option>
+        <option value="evening">Evening</option>
+      </select>
       {state?.message && <p>{state.message}</p>}
       <div className="flex justify-between mt-3">
       <button
