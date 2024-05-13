@@ -4,6 +4,7 @@ import DeleteBtn from "./deleteBtn";
 import { deleteHabitByIdAction } from "@/lib/actions";
 import Card from "@/components/ui/card";
 
+
 async function Habits() {
   const habits: any = await getHabits();
 
