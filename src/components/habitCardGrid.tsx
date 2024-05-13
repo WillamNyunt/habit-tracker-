@@ -14,10 +14,10 @@ async function Habits() {
           <div className="flex justify-between w-full">
             <span className="flex items-center">{habit.name}</span>
             <div className="flex justify-end">
-              <Link href={`?modal=true&type=edit-habit&id=${habit.id}`}>
+              <Link href={`?modal=true&type=edit-habit&id=${habit.habit_id}`}>
                 <button className="button-primary">Edit</button>
               </Link>
-              <DeleteBtn deleteFn={deleteHabitByIdAction} id={habit.id} />
+              <DeleteBtn deleteFn={deleteHabitByIdAction} id={habit.habit_id} />
             </div>
           </div>
         </Card>
