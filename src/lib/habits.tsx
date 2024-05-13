@@ -13,20 +13,20 @@ export async function getHabitById(id: string) {
   return db.prepare("SELECT * FROM habits WHERE habit_id = ?").get(id);
 }
 
-export async function saveHabitDb(data: { name: string }) {
+export async function saveHabitDb(data: { name: string, time_of_day: string}) {
   const slug = slugify(data.name, { lower: true });
-  const stmt = db.prepare("INSERT INTO habits (name, slug) VALUES (?, ?)");
-  stmt.run(xss(data.name), slug);
+  const stmt = db.prepare("INSERT INTO habits (name, time_of_day, slug) VALUES (?, ?, ?)");
+  stmt.run(xss(data.name), data.time_of_day, slug);
 }
 
-export async function editHabitDb(data: { name: string; id: string }) {
+export async function editHabitDb(data: { name: string; time_of_day: string; id: string }) {
   const habit = getHabitById(data.id);
   if (!habit) {
     throw new Error("Habit not found");
   }
   const slug = slugify(data.name, { lower: true });
-  const stmt = db.prepare("UPDATE habits SET name = ?, slug = ? WHERE habit_id = ?");
-  stmt.run(xss(data.name), slug, data.id);
+  const stmt = db.prepare("UPDATE habits SET name = ?, time_of_day = ?, slug = ? WHERE habit_id = ?");
+  stmt.run(xss(data.name), data.time_of_day, slug, data.id);
 }
 
 export async function deleteHabitDb(id: string) {

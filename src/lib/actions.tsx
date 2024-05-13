@@ -3,10 +3,12 @@
 import { saveHabitDb, editHabitDb, getHabitById, deleteHabitDb, getHabits } from "./habits"
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { time } from "console";
 
 export async function addHabitAction(prevState : {message : string}, formData : FormData) {
     const data = {
-        name: formData.get('name') as string
+        name: formData.get('name') as string,
+        time_of_day: formData.get('time_of_day') as string
     }
 
     if (!data.name) {
@@ -22,7 +24,8 @@ export async function addHabitAction(prevState : {message : string}, formData : 
 export async function editHabitAction(prevState : {message : string}, formData : FormData) {
     const data = {
         name: formData.get('name') as string,
-        id: formData.get('id') as string
+        id: formData.get('id') as string,
+        time_of_day: formData.get('time_of_day') as string
     }
 
     console.log(data)
