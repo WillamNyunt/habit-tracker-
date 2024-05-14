@@ -46,9 +46,8 @@ const TrackDay: React.FC<TrackDayProps> = async ({date}) => {
       </div>
       <div className="rounded grid grid-cols-4 gap-2">
         {timeOfDay.map((time) => (
-          <div>
+          <div key={time.title}>
             <ColourfulTitle
-              key={time.title}
               title={time.title}
               subtitle={`${time.habits.length} ${
                 time.habits.length > 1 ? "habits" : "habit"
