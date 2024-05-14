@@ -23,8 +23,8 @@ function ToolTip({
  * @param {string[]} highlightedDays - array of days to highlight
  */
 export default function CalenadarHeaTMap({month, year, highlightedDays}: {month: number, year: number, highlightedDays: number[] | null }) : React.ReactElement {
-  const may = new MonthMap(month, year);
-  const daysOfWeek = may.dayArr;
+  const monthMap = new MonthMap(month, year);
+  const daysOfWeek = monthMap.dayArr;
   const highlight =  highlightedDays;
 
   return (
@@ -35,7 +35,7 @@ export default function CalenadarHeaTMap({month, year, highlightedDays}: {month:
             return <p key={index}>{day}</p>;
           })}
         </div>
-        {may.formMonthDayMatrix().map((week, index) => {
+        {monthMap.formMonthDayMatrix().map((week, index) => {
           return (
             <div key={index} className={classes.week + ' grid'}>
               {week.map((day, index) => {
