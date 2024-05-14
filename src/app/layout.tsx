@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Navigation from "../components/navigation";
 import Modal from "../components/ui/modal";
+import { Suspense } from "react";
 
 const RobotoFont = Roboto({ weight: "400", subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={RobotoFont.className + " flex flex-row min-h-screen"}>
         <Navigation />
-        <Modal />
+        <Suspense fallback={<p>Loading</p>}>
+          <Modal />
+        </Suspense>
         <main className="flex min-h-screen flex-col p-8  w-full">
           {children}
         </main>
