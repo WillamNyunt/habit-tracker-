@@ -1,76 +1,52 @@
 import React from "react";
-import Card from "./ui/card";
 import ColourfulTitle from "./ui/colourfulTitle";
 import { getHabits } from "@/lib/habits";
-import { habitColors, habitTitleColor } from "@/lib/config";
-import HabitCheckGrid from "./habitCheckGrid";
+import HabitCheckColumn from "./habitCheckColumn";
 import moment from "moment";
+import DatePicker from "./ui/datePicker";
+import { Suspense } from "react";
+import { Habit } from "@/types";
+import { timeOfDayConfig } from "@/lib/config";
 
-interface Habit {
-  name: string;
-  time_of_day: string;
-  slug: string;
+interface TrackDayProps {
+  date: string;
 }
 
-interface TimeOfDay {
-  title: string;
-  color: string;
-  textColor: string;
-  habits: Habit[];
-}
-
-const TrackDay: React.FC<{}> = async () => {
-  const timeOfDay: TimeOfDay[] = [
-    {
-      title: "Morning",
-      color: habitColors.morning,
-      textColor: habitTitleColor,
-      habits: [],
-    },
-    {
-      title: "Afternoon",
-      color: habitColors.afternoon,
-      textColor: habitTitleColor,
-      habits: [],
-    },
-    {
-      title: "Evening",
-      color: habitColors.evening,
-      textColor: habitTitleColor,
-      habits: [],
-    },
-    {
-      title: "All",
-      color: habitColors.all,
-      textColor: habitTitleColor,
-      habits: [],
-    },
-  ];
+/** Accepts day as string in format 'YYYY-MM-DD' and returns a page to track habits for that day
+ * 
+ * @param date 
+ * @returns 
+ */
+const TrackDay: React.FC<TrackDayProps> = async ({date}) => {
+  let timeOfDay = timeOfDayConfig;
 
   const habits = (await getHabits()) as Habit[];
-
-  habits.forEach((habit) => {
-    switch (habit.time_of_day) {
-      case "morning":
-        timeOfDay[0].habits.push(habit);
-        break;
-      case "afternoon":
-        timeOfDay[1].habits.push(habit);
-        break;
-      case "evening":
-        timeOfDay[2].habits.push(habit);
-        break;
-      default:
-        timeOfDay[3].habits.push(habit);
-    }
+  timeOfDay = timeOfDay.map((time) => {
+    time.habits = habits.filter((habit) => habit.time_of_day === time.time_of_day);
+    return time;
   });
 
-  const today = new Date();
-  const todayFormatted = moment(today).format("YYYY-MM-DD");
+  let todayFormatted = "";
+
+  if (!date) {
+    const today = new Date();
+    todayFormatted = moment(today).format("YYYY-MM-DD");
+  } else {
+    todayFormatted = date;
+  }
+
+  const today = moment(todayFormatted).format("YYYY-MM-DD");
+  console.log
+  let selectedDate = today;
 
   return (
-    <Card className="flex flex-col rounded">
-      <h2 className="mb-5">Today</h2>
+    <>
+      <div className="flex flex-row justify-between mb-5">
+        <h2 className="mb-5">{selectedDate}</h2>
+        <Suspense fallback={<div>Loading...</div>}>
+          <DatePicker date={todayFormatted} />
+        </Suspense>
+      </div>
       <div className="rounded grid grid-cols-4 gap-2">
         {timeOfDay.map((time) => (
           <div>
@@ -83,11 +59,11 @@ const TrackDay: React.FC<{}> = async () => {
               color={time.color}
               textColor={time.textColor}
             />
-            <HabitCheckGrid habits={time.habits} date={todayFormatted} />
+            <HabitCheckColumn habits={time.habits} date={todayFormatted} />
           </div>
         ))}
       </div>
-    </Card>
+    </>
   );
 };
 

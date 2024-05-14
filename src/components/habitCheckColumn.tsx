@@ -1,19 +1,17 @@
 import CheckHabitForm from "@/components/forms/CheckHabit";
 import { getHabitChecksByDateAction } from "@/lib/actions";
 
-interface HabitCheckGridProps {
+interface HabitCheckColumnProps {
   habits: any[];
   date: string;
 }
 
-const HabitCheckGrid: React.FC<HabitCheckGridProps> = async ({
+const HabitCheckColumn: React.FC<HabitCheckColumnProps> = async ({
   habits,
   date,
 }) => {
-  console.log(date)
   const dateHabit = await getHabitChecksByDateAction(date) as any[];
-  console.log(dateHabit);
-
+  
   return (
     <div className="flex gap-2 flex-col pt-5 pb-5 pl-2 pr-2 rounded bg-slate-100">
       {habits.map((habit: any) => (
@@ -35,4 +33,4 @@ const HabitCheckGrid: React.FC<HabitCheckGridProps> = async ({
   );
 };
 
-export default HabitCheckGrid;
+export default HabitCheckColumn;

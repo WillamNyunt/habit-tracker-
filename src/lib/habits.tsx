@@ -56,7 +56,11 @@ export async function getDateIdByDate(date: string) {
   const stmt = db.prepare("SELECT date_id FROM dates WHERE date = ?");
   return stmt.get(date);
 }
-
+/**
+ * 
+ * @param date 
+ * @returns all dates at the date provided.
+ */
 export async function getHabitChecksByDate(date: string) {
   if (!date) {
     throw new Error("Date is required");

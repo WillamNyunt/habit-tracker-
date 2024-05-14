@@ -3,17 +3,14 @@ import React from "react";
 import { checkHabitFormAction } from "@/lib/actions";
 import { useFormState } from "react-dom";
 import classes from "./CheckHabit.module.css";
-import { useState } from "react";
 
 /**
  * 
  * @param habit_id  
  * @returns 
  */
-
 const CheckHabitForm : React.FC<{habitId: string, date: string, check: boolean }> = ({habitId, date, check}) => {
     const [state, formAction] = useFormState(checkHabitFormAction, { message: "" });
-    console.log(check);
     return (
         <form action={formAction}>
         <input type="hidden" name="habit_id" value={habitId} />

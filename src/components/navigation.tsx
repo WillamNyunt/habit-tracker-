@@ -26,11 +26,6 @@ export default function Navigation() {
                             <p className={`${classes['nav-button']}  ${pathname === '/track' ? classes['active-link'] : ''}`}>Track</p>
                         </Link>
                     </li>
-                    <li>
-                        <Link href='/habits'>
-                            <p className={classes['nav-button']}>Info</p>
-                        </Link>
-                    </li>
                 </ul>
             </nav>
         </aside>

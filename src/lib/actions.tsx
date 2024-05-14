@@ -95,6 +95,11 @@ export async function getDateIdByDateAction(date: string) {
     return await getDateIdByDate(date)
 }
 
+/**
+ * 
+ * @param date 
+ * @returns returns all habits with the date provided.
+ */
 export async function getHabitChecksByDateAction(date: string) {
     if (!date) {
         return { message: "Date is required" }
