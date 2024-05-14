@@ -64,12 +64,9 @@ export async function checkHabitFormAction(prevState : {message : string}, formD
     const data = {
         date: formData.get('date') as string,
         habit_id: formData.get('habit_id') as string,
-        notes: '' as string
+        notes: '' as string,
+        revalidatePath: formData.get('revalidatePath') as string
     }
-
-
-    console.log(`checkDateFormAction fired`)
-    console.log(data)
 
     if (!data.habit_id) {
         return { message: "Habit is required" }
@@ -81,8 +78,8 @@ export async function checkHabitFormAction(prevState : {message : string}, formD
 
     await addDateToHabit(data)
 
-    revalidatePath('/track')
-    redirect('/track')
+    revalidatePath(data.revalidatePath)
+    redirect(data.revalidatePath)
 }
 
 export async function getDateIdByDateAction(date: string) {
