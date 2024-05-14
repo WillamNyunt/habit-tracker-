@@ -13,7 +13,7 @@ interface TrackDayProps {
   date: string;
 }
 
-/** Accepts day as string in format 'YYYY-MM-DD' and returns a page to track habits for that day
+/** Accepts day as string in format 'YYYY-MM-DD' and returns a page with habit check columns for each time of day.
  * 
  * @param date 
  * @returns 
@@ -35,7 +35,6 @@ const TrackDay: React.FC<TrackDayProps> = async ({date}) => {
   } else {
     dateFormatted = date;
   }
-
   
   return (
     <>
