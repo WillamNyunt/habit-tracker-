@@ -7,6 +7,7 @@ import DatePicker from "./ui/datePicker";
 import { Suspense } from "react";
 import { Habit } from "@/types";
 import { timeOfDayConfig } from "@/lib/config";
+import { getDateTitle } from "@/app/util";
 
 interface TrackDayProps {
   date: string;
@@ -26,25 +27,22 @@ const TrackDay: React.FC<TrackDayProps> = async ({date}) => {
     return time;
   });
 
-  let todayFormatted = "";
+  let dateFormatted = "";
 
   if (!date) {
     const today = new Date();
-    todayFormatted = moment(today).format("YYYY-MM-DD");
+    dateFormatted = moment(today).format("YYYY-MM-DD");
   } else {
-    todayFormatted = date;
+    dateFormatted = date;
   }
 
-  const today = moment(todayFormatted).format("YYYY-MM-DD");
-  console.log
-  let selectedDate = today;
-
+  
   return (
     <>
       <div className="flex flex-row justify-between mb-5">
-        <h2 className="mb-5">{selectedDate}</h2>
+        <h2 className="mb-5">{getDateTitle(dateFormatted)}</h2>
         <Suspense fallback={<div>Loading...</div>}>
-          <DatePicker date={todayFormatted} />
+          <DatePicker date={dateFormatted} />
         </Suspense>
       </div>
       <div className="rounded grid grid-cols-4 gap-2">
@@ -59,7 +57,7 @@ const TrackDay: React.FC<TrackDayProps> = async ({date}) => {
               color={time.color}
               textColor={time.textColor}
             />
-            <HabitCheckColumn habits={time.habits} date={todayFormatted} />
+            <HabitCheckColumn habits={time.habits} date={dateFormatted} />
           </div>
         ))}
       </div>
