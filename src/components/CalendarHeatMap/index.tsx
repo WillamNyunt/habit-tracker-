@@ -22,7 +22,7 @@ function ToolTip({
  * @param {number} year - year in format YYYY
  * @param {string[]} highlightedDays - array of days to highlight
  */
-export default function CalenadarHeaTMap({month, year, highlightedDays}: {month: number, year: number, highlightedDays: number[] | null }) : React.ReactElement {
+export default function CalenadarHeatMap({month, year, highlightedDays}: {month: number, year: number, highlightedDays: number[] | null }) : React.ReactElement {
   const monthMap = new MonthMap(month, year);
   const daysOfWeek = monthMap.dayArr;
   const highlight =  highlightedDays;
@@ -46,7 +46,6 @@ export default function CalenadarHeaTMap({month, year, highlightedDays}: {month:
                     style={{ gridColumnStart: `${day.getDay() != 0 ? day.getDay() : 7}` }}
                   >
                     {day.getDate()}
-                    
                   </ToolTip>
                 );
               })}
