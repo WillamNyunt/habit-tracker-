@@ -2,8 +2,7 @@ import React from "react";
 import Card from "../../components/ui/card";
 import Link from "next/link";
 import HabitsCardGrid from "../../components/habitCardGrid"
-import CalenadarHeaTMap from "@/components/CalendarHeatMap";
-
+import HabitTrackerCalendar from "@/components/habitTrackerCalendar";
 
 export default function HabitsPage() {
   return (
@@ -21,7 +20,7 @@ export default function HabitsPage() {
         </Card>
         <Card className='flex flex-col'>
           <h2 className="mb-5">Monthly record</h2>
-          <CalenadarHeaTMap month={5} year={2024} />
+          <HabitTrackerCalendar />
         </Card>
       </div>
     </>
