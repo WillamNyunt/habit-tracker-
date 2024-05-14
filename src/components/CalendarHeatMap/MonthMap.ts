@@ -1,9 +1,20 @@
+
+/**
+ * This class will take in a month and year and return a map of the month
+ * with the first day of the month and the last day of the month
+ * 
+ */
 export default class MonthMap {
     firstDay : Date; 
     firstDayOfWeekOne : number;
     lastDayOfMonth : number;
     dayArr : string[];
 
+    /**
+     * 
+     * @param month - format MM (01, 12) 
+     * @param year - format YYYY 
+     */ 
     constructor(month : number, year: number) {
         this.firstDay = new Date(`${year}-${month}-01`);
         this.lastDayOfMonth = new Date(this.firstDay.getFullYear(), this.firstDay.getMonth() + 1, 0).getDate();
