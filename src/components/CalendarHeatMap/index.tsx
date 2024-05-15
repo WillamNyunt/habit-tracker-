@@ -20,12 +20,14 @@ function ToolTip({
  * @returns {React.ReactElement} returns a calendar heatmap component
  * @param {number} month - month of the year in format M (1-12)
  * @param {number} year - year in format YYYY
- * @param {string[]} highlightedDays - array of days to highlight
+ * @param {{day: string, frequency: number}[]}} highlightedDays - array of days to highlight
  */
-export default function CalenadarHeatMap({month, year, highlightedDays}: {month: number, year: number, highlightedDays: number[] | null }) : React.ReactElement {
+export default function CalenadarHeatMap({month, year, highlightedDays}: {month: number, year: number, highlightedDays: {date: string, frequency: number}[]}) : React.ReactElement {
   const monthMap = new MonthMap(month, year);
   const daysOfWeek = monthMap.dayArr;
   const highlight =  highlightedDays;
+  
+  monthMap.addHighlightedDays(highlight);
 
   return (
     <Card>
@@ -42,8 +44,8 @@ export default function CalenadarHeatMap({month, year, highlightedDays}: {month:
                 return (
                   <ToolTip
                     key={index}
-                    className={highlight?.includes(day.getDate()) ? classes.highlighted : ""}
                     style={{ gridColumnStart: `${day.getDay() != 0 ? day.getDay() : 7}` }}
+                    className={`${monthMap.getHighlightedDay(day) ? classes.highlighted : ''}  ${classes.day}`}
                   >
                     {day.getDate()}
                   </ToolTip>

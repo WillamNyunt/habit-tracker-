@@ -70,3 +70,19 @@ export async function getHabitChecksByDate(date: string) {
   }
   return db.prepare('SELECT * FROM HabitChecks WHERE check_date = ?').all(date);
 }
+
+/** Gets all habit checks for a given month 
+ * 
+ *  @param month - the month to get habit checks for in format YYYY-MM
+ * @returns all habit checks for the month provided
+ */
+export async function getHabitChecksByMonth(month: string) {
+  if (!month) {
+    throw new Error("Month is required");
+  }
+  if (!month.match(/^\d{4}-\d{2}$/)) {
+    throw new Error("Month must be in format YYYY-MM");
+  }
+  return db.prepare('SELECT * FROM HabitChecks WHERE check_date LIKE ?').all(`${month}%`);
+}
+

@@ -1,3 +1,4 @@
+import moment from "moment";
 
 /**
  * This class will take in a month and year and return a map of the month
@@ -9,6 +10,7 @@ export default class MonthMap {
     firstDayOfWeekOne : number;
     lastDayOfMonth : number;
     dayArr : string[];
+    highlightedDays : {date: string, frequency: number}[] = [];
 
     /**
      * 
@@ -34,6 +36,7 @@ export default class MonthMap {
         this.lastDayOfMonth = new Date(this.firstDay.getFullYear(), this.firstDay.getMonth() + 1, 0).getDate();
         this.firstDayOfWeekOne = this.firstDay.getDay();
         this.dayArr = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+        this.highlightedDays = [];
     }
 
     getDaysInMonth() {
@@ -52,6 +55,16 @@ export default class MonthMap {
 
     getFirstDayOfTheMonth() {
         return this.firstDay.getDay();
+    }
+
+    /**
+    * This function will add a day to the highlighted days array
+    * @param {day: string, frequency: number}[] - array of days to add to the highlighted days array
+     * @returns {void}
+    */
+    addHighlightedDays(highlightedDays : {date: string, frequency: number}[]) {
+        console.log(highlightedDays)
+        this.highlightedDays = [...highlightedDays]
     }
 
     /** 
@@ -84,6 +97,17 @@ export default class MonthMap {
         });
         return matrix;
     }
+
+    getHighlightedDay(day : Date) {
+        let dateStr = moment(day).format('YYYY-MM-DD');
+        let highlighted = this.highlightedDays.find(date => date.date === dateStr);
+        if (highlighted) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
 
 const may = new MonthMap(1, 2024);

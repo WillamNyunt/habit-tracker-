@@ -11,7 +11,7 @@ import moment from "moment";
 
 const HabitTrackerCalendar = () => {
     const [date, setDate] = useState<string | null>(moment().format("YYYY-MM-DD"));
-
+    const [highlightedDays, setHighlightedDays] = useState<{ day: string, frequency: number }[]>([]);
     /* The month returned from Datepicker value is index 0 - 11 */
     const month = moment(date).month() + 1;
     const year = moment(date).year();
@@ -19,14 +19,12 @@ const HabitTrackerCalendar = () => {
     const fetchData = async () => {
         try {
             const inputValue = date;
-            const res = await fetch('/api/test', {
+            const res = await fetch(`/api/get-checks-by-month?date=${date}`, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
             });
             const result = await res.json();
-            console.log(result)
+            setHighlightedDays(result);
+            
         } catch (error) {
             console.error('Error calling API:', error);
         }
@@ -34,8 +32,7 @@ const HabitTrackerCalendar = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
-
+    }, [date]);
 
     return (
         <div>
@@ -48,7 +45,7 @@ const HabitTrackerCalendar = () => {
                     className="mb-5"
                 />
             </LocalizationProvider>
-            <CalenadarHeatMap month={month} year={year} />
+            <CalenadarHeatMap month={month} year={year} highlightedDays={highlightedDays} />
         </div>
     );
 };
