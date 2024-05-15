@@ -2,17 +2,20 @@ import React from "react";
 import MonthMap from "./MonthMap";
 import Card from "../ui/card";
 import classes from "./index.module.css";
+import toolTipClass from "./tooltip.module.css";
 
 function ToolTip({
   children,
   className,
-  style
+  style,
+  frequency,
 }: {
   children: React.ReactNode;
   className?: string;
   style: { [key: string]: string };
+  frequency: number;
 }): React.ReactElement {
-  return <div className={className} style={style}>{children}</div>;
+  return <div className={`${toolTipClass.tooltip} ${className}`} style={style}>{children}{frequency !== 0 && <span className={toolTipClass.span}>Habit{frequency > 1 && 's'} checked: {frequency}</span>}</div>;
 }
 
 /**
@@ -46,6 +49,7 @@ export default function CalenadarHeatMap({month, year, highlightedDays}: {month:
                     key={index}
                     style={{ gridColumnStart: `${day.getDay() != 0 ? day.getDay() : 7}` }}
                     className={`${monthMap.getHighlightedDay(day) ? classes.highlighted : ''}  ${classes.day}`}
+                    frequency={monthMap.getFrequency(day)}
                   >
                     {day.getDate()}
                   </ToolTip>

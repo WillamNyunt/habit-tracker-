@@ -108,6 +108,16 @@ export default class MonthMap {
         }
     }
 
+    getFrequency(day : Date) {
+        let dateStr = moment(day).format('YYYY-MM-DD');
+        let highlighted = this.highlightedDays.find(date => date.date === dateStr);
+        if (highlighted) {
+            return highlighted.frequency;
+        } else {
+            return 0;
+        }
+    }
+
 }
 
 const may = new MonthMap(1, 2024);

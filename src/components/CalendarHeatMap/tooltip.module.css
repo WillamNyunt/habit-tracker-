@@ -1,0 +1,16 @@
+.span {
+    display: block;
+    position: absolute;
+    z-index: 100;
+    transform: translate(-3em, -4em);
+    background-color: #000;
+    color: #fff;
+    display: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.tooltip:hover .span {
+    display: block;
+}
+
