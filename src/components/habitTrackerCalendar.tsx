@@ -11,7 +11,7 @@ import moment from "moment";
 
 const HabitTrackerCalendar = () => {
     const [date, setDate] = useState<string | null>(moment().format("YYYY-MM-DD"));
-    const [highlightedDays, setHighlightedDays] = useState<{ day: string, frequency: number }[]>([]);
+    const [highlightedDays, setHighlightedDays] = useState<{ date: string, frequency: number }[]>([]);
     /* The month returned from Datepicker value is index 0 - 11 */
     const month = moment(date).month() + 1;
     const year = moment(date).year();

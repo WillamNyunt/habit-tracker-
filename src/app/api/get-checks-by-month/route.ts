@@ -18,9 +18,9 @@ export async function GET(request: Request) {
 
     const dateToFrequencyArr = [] as {date: string, frequency: number}[]
 
+    // This loop will iterate through the habits and create an array of objects with the date and frequency of checks
     habits.forEach(habit => {
         const date = habit.check_date
-        // in date to frequency array, find the date and increment the frequency if date does not exist add date
         const dateIndex = dateToFrequencyArr.findIndex(dateObj => dateObj.date === date)
         if (dateIndex === -1) {
             dateToFrequencyArr.push({ date, frequency: 1 })

@@ -23,7 +23,7 @@ function ToolTip({
  * @returns {React.ReactElement} returns a calendar heatmap component
  * @param {number} month - month of the year in format M (1-12)
  * @param {number} year - year in format YYYY
- * @param {{day: string, frequency: number}[]}} highlightedDays - array of days to highlight
+ * @param {{date: string, frequency: number}[]}} highlightedDays - array of days to highlight
  */
 export default function CalenadarHeatMap({month, year, highlightedDays}: {month: number, year: number, highlightedDays: {date: string, frequency: number}[]}) : React.ReactElement {
   const monthMap = new MonthMap(month, year);
