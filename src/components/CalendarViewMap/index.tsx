@@ -14,6 +14,9 @@ interface HabitChecksMap {
 
 const CalendarViewMap: React.FC = async () => {
   const habits: any = await getHabits();
+  //year in format YYYY
+  const year = moment().format("YYYY");
+  const month = moment().format("MM");
 
   const daysThisMonth = moment().daysInMonth();
   const daysArray = Array.from(Array(daysThisMonth).keys());
@@ -37,7 +40,8 @@ const CalendarViewMap: React.FC = async () => {
       </div>      
       <div className="grid grid-flow-col">
         <div className="grid grid-flow-row">
-          <div className="invisible">Habit</div>
+        <div className="invisible">Hidden</div>
+          <div className="invisible">Hidden</div>
           {habits.map((habit: any) => (
             <div key={habit}>{habit.name}</div>
           ))}
@@ -46,6 +50,7 @@ const CalendarViewMap: React.FC = async () => {
           <>
             <div className="grid grid-flow-row">
               <div>{day + 1}</div>
+              <div>{moment(`${year}-${month}-${day + 1 < 10? '0'+ (day + 1) : day + 1 }`).format('dd')}</div>
               {habits.map((habit: any) => (
                 <div
                   key={habit.habit_id}
@@ -53,7 +58,7 @@ const CalendarViewMap: React.FC = async () => {
                     habitChecksMap[day + 1]?.includes(habit.habit_id)
                       ? classes.checked
                       : classes.unchecked
-                  }`}
+                  } ${day + 1 > moment().date() ? classes.disabled : ""}`}
                 ></div>
               ))}
             </div>
