@@ -77,6 +77,7 @@ export async function getHabitChecksByDate(date: string) {
  * @returns all habit checks for the month provided
  */
 export async function getHabitChecksByMonth(month: string) {
+  console.log('month is' + month)
   if (!month) {
     throw new Error("Month is required");
   }
@@ -86,3 +87,6 @@ export async function getHabitChecksByMonth(month: string) {
   return db.prepare('SELECT * FROM HabitChecks WHERE check_date LIKE ?').all(`${month}%`);
 }
 
+export async function getAllHabitChecks() {
+  return db.prepare('SELECT * FROM HabitChecks').all();
+}

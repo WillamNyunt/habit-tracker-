@@ -24,7 +24,7 @@ export default function RootLayout({
         <Suspense fallback={<p>Loading</p>}>
           <Modal />
         </Suspense>
-        <main className="flex min-h-screen flex-col p-8  w-full">
+        <main className="flex min-h-screen flex-col p-8  w-full overflow-hidden">
           {children}
         </main>
       </body>

@@ -1,0 +1,62 @@
+import React from "react";
+import { getHabits, getAllHabitChecks } from "@/lib/habits";
+import Card from "../ui/card";
+import moment from "moment";
+import classes from './calnedarViewMap.module.css';
+
+const CalendarViewMap: React.FC = async () => {
+  const habits: any = await getHabits();
+  const dates = ["M", "T", "W", "T", "F", "S", "S"];
+
+  const numberOfDaysThisYear = moment().isLeapYear() ? 366 : 365;
+  const days = Array.from({ length: numberOfDaysThisYear }, (_, i) => {
+    const date = new Date(2024, 0, i + 1);
+    return {
+      date: date.toISOString().split("T")[0],
+      day: date.toLocaleDateString("en-US", { weekday: "narrow" }),
+    };
+  });
+
+  const calendar = days.map((day) => {
+    return [day.day, habits.map((habit: any) => habit.habit_id)];
+  });
+
+  const habitChecks = await getAllHabitChecks();
+
+  //   console.log(habitChecks)
+
+  const habitDateArr = habitChecks.reduce((acc: any, curr: any) => {
+    //convert curr.check_date into day of the year
+    const dayOfYear = moment(curr.check_date).dayOfYear();
+    return [...acc, { dayOfYear: dayOfYear, habit_id: curr.habit_id }];
+  }, []);
+
+  return (
+    <Card className="flex flex-row overflow-auto">
+      <div className="flex flex-col mt-16">
+        {habits.map((habit: any) => (
+          <div key={habit.habit_id} className="flex align-middle w-full">
+            <span className="flex items-center">{habit.name}</span>
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-col w-full overflow-x-auto mt-5">
+        <div className={classes['calendar-wrapper']}>
+            {days.map((day, index) => (
+              <div key={index} className={classes['calendar-day']}>
+                <span className="mb-5">{day.day}</span>
+                <div className={classes['calendar-day__column']}>
+                  {habits.map((habit: any) => (
+                    <div key={habit.habit_id} className={classes['tool-tip']}>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+    </Card>
+  );
+};
+
+export default CalendarViewMap;
