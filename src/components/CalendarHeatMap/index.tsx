@@ -33,7 +33,7 @@ export default function CalenadarHeatMap({month, year, highlightedDays}: {month:
   monthMap.addHighlightedDays(highlight);
 
   return (
-    <Card>
+    <Card className='mt-4 mb-4'>
       <div className={classes.month}>
         <div className={classes.week}>
           {daysOfWeek.map((day, index) => {

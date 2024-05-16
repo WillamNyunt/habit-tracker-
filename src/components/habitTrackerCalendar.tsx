@@ -42,7 +42,6 @@ const HabitTrackerCalendar = () => {
                     views={["month", "year"]}
                     value={moment(date)}
                     onAccept={value => setDate(value!.format("YYYY-MM-DD"))}
-                    className="mb-5"
                 />
             </LocalizationProvider>
             <CalenadarHeatMap month={month} year={year} highlightedDays={highlightedDays} />
