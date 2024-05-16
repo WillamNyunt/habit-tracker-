@@ -69,7 +69,7 @@ const EditHabitForm: React.FC<EditHabitFormProps> = (props) => {
           className="bg-slate-800 text-white p-2 rounded-md"
           onClick={props.handleModalClose}
         >
-          Close Modal
+          Close
         </button>
         <button>Edit</button>
       </div>

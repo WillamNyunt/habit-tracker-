@@ -26,7 +26,7 @@ export default function AddHabitForm(props: AddHabitFormProps) {
         className="bg-slate-800 text-white p-2 rounded-md"
         onClick={props.handleModalClose}
       >
-        Close Modal
+        Close
       </button>
       <button>Create</button>
       </div>

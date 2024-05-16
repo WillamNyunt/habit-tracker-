@@ -12,8 +12,9 @@ const ColourfulTitle: React.FC<{ title?: string; subtitle?: string; color?:strin
     color,
     textColor
 }) => {
+    const linearGradientBlend = `linear-gradient(12deg, ${color} 0%, ${color} 19%, #FFFDD9 154%, #ffffff 100%)`; // this works
     return (
-        <div className="flex flex-col align-middle items-start p-4 rounded gap-0" style={{ backgroundColor: color }}>
+        <div className={`flex flex-col align-middle items-start p-4 rounded gap-0`} style={{ background: linearGradientBlend  }}>
             <h3 className="text-1xl text-center" style={{ color: textColor }}>{title} </h3>
             <p className="text-lg text-center text-white" style={{ color: textColor }}>{subtitle}</p>
         </div>
