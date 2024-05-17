@@ -8,6 +8,7 @@ import Card from "../ui/card";
 import moment from "moment";
 import classes from "./calnedarViewMap.module.css";
 import Link from "next/link";
+import { HiOutlineChevronRight, HiOutlineChevronLeft } from "react-icons/hi2";
 
 interface HabitChecksMap {
   [key: number]: string[];
@@ -64,13 +65,13 @@ const CalendarViewMap: React.FC<{ month: string; year: string }> = async ({
     <Card className="flex flex-col overflow-auto">
       <div className="flex justify-center">
         <Link href={{ query: { month: prevMonth, year: "2024" } }}>
-          <button>Previous Month</button>
+          <button className="btn-round"><HiOutlineChevronLeft/></button>
         </Link>
-        <h3>
+        <h3 className='mr-2 ml-2 mb-2'>
           {nameOfMonth} {moment().format(year)}
         </h3>
         <Link href={{ query: { month: nextMonth, year: "2024" } }}>
-          <button>Next Month</button>
+          <button className="btn-round"><HiOutlineChevronRight/></button>
         </Link>
       </div>
       <div className="grid grid-flow-col">
@@ -83,7 +84,7 @@ const CalendarViewMap: React.FC<{ month: string; year: string }> = async ({
         </div>
         {daysArray.map((day: number) => (
           <>
-            <div className="grid grid-flow-row">
+            <div className="grid grid-flow-row" style={{width: '20px'}}>
               <div>{day + 1}</div>
               <div>
                 {moment(

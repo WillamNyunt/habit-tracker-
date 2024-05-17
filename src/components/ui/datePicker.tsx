@@ -7,6 +7,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import { HiOutlineChevronRight, HiOutlineChevronLeft } from "react-icons/hi2";
 
 const DatePicker: React.FC<{ date: string }> = (props) => {
   const router = useRouter();
@@ -44,7 +45,7 @@ const DatePicker: React.FC<{ date: string }> = (props) => {
             .subtract(1, "days")
             .format("YYYY-MM-DD")}`}
         >
-          <button className="bg-black text-white square rounded-full" style={{width: '30px', height: '30px'}}>{'<'}</button>
+          <button className="bg-black text-white square rounded-full flex items-center justify-center" style={{width: '30px', height: '30px'}}><HiOutlineChevronLeft/></button>
         </Link>
         <MobileDatePicker
           onAccept={(value) => handleDateAccept(value)}
@@ -58,7 +59,7 @@ const DatePicker: React.FC<{ date: string }> = (props) => {
               .add(1, "days")
               .format("YYYY-MM-DD")}`}
           >
-            <button className="bg-black text-white square rounded-full" style={{width: '30px', height: '30px'}}>{'>'}</button>
+            <button className="bg-black text-white square rounded-full flex items-center justify-center" style={{width: '30px', height: '30px'}}><HiOutlineChevronRight/></button>
           </Link>
         ) : <button disabled className="bg-slate-200 text-white square rounded-full" style={{width: '30px', height: '30px'}}>{'>'}</button>}
       </div>
