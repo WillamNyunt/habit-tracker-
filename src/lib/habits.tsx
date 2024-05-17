@@ -77,7 +77,6 @@ export async function getHabitChecksByDate(date: string) {
  * @returns all habit checks for the month provided
  */
 export async function getHabitChecksByMonth(month: string) {
-  console.log('month is' + month)
   if (!month) {
     throw new Error("Month is required");
   }
