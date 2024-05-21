@@ -1,5 +1,7 @@
 'use server'
 
+import client  from "@/lib/clientPromise";
+
 import { saveHabitDb, editHabitDb, getHabitById, deleteHabitDb, getHabits, addDateToHabit, getDateIdByDate, getHabitChecksByDate } from "./habits"
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -13,8 +15,11 @@ export async function addHabitAction(prevState : {message : string}, formData : 
     if (!data.name) {
         return { message: "Name is required" }
     }
+
+    const db = client.db('habit_tracker');
+    const habits = db.collection('habits');
     
-    await saveHabitDb(data)
+    await habits.insertOne(data)
 
     revalidatePath('/habits')
     redirect('/habits')
@@ -47,7 +52,15 @@ export async function getHabitByIdAction(id: string) {
 }
 
 export async function getHabitsAction() {
-    return await getHabits()
+    const db = client.db('habit_tracker');
+    const habits = db.collection('habits');
+    const habitList = await habits.find().toArray();
+
+    console.log(habitList)
+    return {
+        status: 200,
+        body: habitList
+    }
 }
 
 export async function deleteHabitByIdAction(id: string) : Promise<{ message: string | null }> {

@@ -1,16 +1,16 @@
 import Link from "next/link";
-import { getHabits } from "@/lib/habits";
+import { getHabitsAction } from "@/lib/actions";
 import DeleteBtn from "./deleteBtn";
 import { deleteHabitByIdAction } from "@/lib/actions";
 import Card from "@/components/ui/card";
 
 
 async function Habits() {
-  const habits: any = await getHabits();
-
+  const res: any = await getHabitsAction();
+  const habits = res.body;
   return (
     <div className="grid grid-cols-3 gap-2">
-      {habits.map((habit: any) => (
+      {habits.length != 0 && habits.map((habit: any) => (
         <Card key={habit.habit_id} className="flex align-middle">
           <div className="flex justify-between w-full">
             <span className="flex items-center">{habit.name}</span>

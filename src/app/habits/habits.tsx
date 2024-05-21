@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { getHabits } from '@/lib/habits';
+import { getHabitsAction } from '@/lib/actions';
 import DeleteBtn from '../../components/deleteBtn';
 import { deleteHabitByIdAction } from '@/lib/actions';
 
 async function Habits() {
-    const habits : any =  await getHabits();
+    const habits : any =  await getHabitsAction();
 
     return (
       <>
