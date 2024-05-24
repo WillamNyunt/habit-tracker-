@@ -21,7 +21,7 @@ const HabitTrackerCalendar = () => {
 
     const fetchData = async () => {
         try {
-            const result = await getHabitChecksByMonthAction(monthFormatted, year.toString());
+            const result = await getHabitChecksByMonthAction(monthFormatted, year.toString()) as string;
             const data = JSON.parse(result).data;
             //map highlighted days (data) to { date, frequency } if it is the same date add to frequency data in format YYYY-MM-DD, return an array of objects, no duplicates of date
             const highlightedDaysMap = data.reduce((acc: any, habitCheck: any) => {

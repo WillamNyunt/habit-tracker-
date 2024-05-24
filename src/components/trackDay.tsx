@@ -7,6 +7,7 @@ import DatePicker from "./ui/datePicker";
 import { Suspense } from "react";
 import { timeOfDayConfig } from "@/lib/config";
 import { getDateTitle } from "@/app/util";
+import { Habit } from "@/types";
 
 interface TrackDayProps {
   date: string;
@@ -20,9 +21,9 @@ interface TrackDayProps {
 const TrackDay: React.FC<TrackDayProps> = async ({date}) => {
   let timeOfDay = timeOfDayConfig;
 
-  const habits = await getHabitsAction();
+  const habits = await getHabitsAction() as Habit[];
   timeOfDay = timeOfDay.map((time) => {
-    time.habits = habits.filter((habit) => habit.time_of_day === time.time_of_day);
+    time.habits = habits.filter((habit : Habit) => habit.time_of_day === time.time_of_day);
     return time;
   });
 

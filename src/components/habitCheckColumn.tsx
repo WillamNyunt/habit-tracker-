@@ -11,7 +11,7 @@ const HabitCheckColumn: React.FC<HabitCheckColumnProps> = async ({
   habits,
   date,
 }) => {
-  const dateHabitResponse = await getHabitChecksByDateAction(date) as { status: number, data: HabitCheck[] } | null;
+  const dateHabitResponse = await getHabitChecksByDateAction(date) as string;
   const dateHabitJSON = JSON.parse(dateHabitResponse)
   const dateHabit = dateHabitJSON?.data || [];
   if (habits.length === 0) {
