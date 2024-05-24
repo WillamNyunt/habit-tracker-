@@ -16,6 +16,6 @@ export interface TimeOfDay {
 
 export interface HabitCheck {
     habit_id: string;
-    check_date: string;
+    date: string;
     notes: string;
 }

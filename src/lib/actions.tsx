@@ -201,7 +201,6 @@ export async function getHabitChecksByMonthAction(month: string, year: string) {
     
     const habitChecks = await habitChecksDb.find({ date: { $regex: `^${year}-${month}` } }).toArray()
 
-
     return new Promise((resolve, reject) => {
         if (habitChecks) {
             const habitMap : HabitCheck[] = habitChecks.map((check) => {
