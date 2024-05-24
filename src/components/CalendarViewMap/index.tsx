@@ -27,7 +27,8 @@ const CalendarViewMap: React.FC<{ month: string; year: string }> = async ({
   year,
 }) => {
   const habits: any = await getHabitsAction();
-  const daysThisMonth = moment().daysInMonth();
+  const daysThisMonth = moment(`${year}-${month}`, "YYYY-MM").daysInMonth();
+  console.log(daysThisMonth)
   const daysArray = Array.from(Array(daysThisMonth).keys());
 
   //form days array into { number: 1 , day: M} e.g.
