@@ -1,14 +1,14 @@
 import React from "react";
-import {
-  getHabits,
-  getAllHabitChecks,
-  getHabitChecksByMonth,
-} from "@/lib/habits";
+import { 
+  getHabitsAction,
+  getHabitChecksByMonthAction,
+} from "@/lib/actions";
 import Card from "../ui/card";
 import moment from "moment";
 import classes from "./calnedarViewMap.module.css";
 import Link from "next/link";
 import { HiOutlineChevronRight, HiOutlineChevronLeft } from "react-icons/hi2";
+import { HabitCheck } from "@/types";
 
 interface HabitChecksMap {
   [key: number]: string[];
@@ -26,26 +26,29 @@ const CalendarViewMap: React.FC<{ month: string; year: string }> = async ({
   month,
   year,
 }) => {
-  const habits: any = await getHabits();
+  const habits: any = await getHabitsAction();
   const daysThisMonth = moment().daysInMonth();
   const daysArray = Array.from(Array(daysThisMonth).keys());
 
   //form days array into { number: 1 , day: M} e.g.
-  const habitChecks = await getHabitChecksByMonth(
-    moment().format(`${year}-${month}`)
-  );
+  const habitChecks : string = await getHabitChecksByMonthAction(
+    month,
+    year
+  ) as string;
 
+  const habitChecksJSON = JSON.parse(habitChecks).data;
   const nameOfMonth = moment().month(month).subtract(1, "month").format("MMMM");
 
   // map habitChecks check_date to { date (array format e.g. day of month 0 - 31) , [habit ids] }
-  const habitChecksMap = habitChecks.reduce((acc: any, habitCheck: any) => {
-    const date = moment(habitCheck.check_date).date();
+  const habitChecksMap = habitChecksJSON.reduce((acc: any, habitCheck: any) => {
+    const date = moment(habitCheck.date).date();
     if (!acc[date]) {
       acc[date] = [];
     }
     acc[date].push(habitCheck.habit_id);
     return acc;
   }, {}) as HabitChecksMap;
+
 
   if (!month) {
     return <div>Month is required</div>;
@@ -79,12 +82,12 @@ const CalendarViewMap: React.FC<{ month: string; year: string }> = async ({
           <div className="invisible">Hidden</div>
           <div className="invisible">Hidden</div>
           {habits.map((habit: any) => (
-            <div key={habit}>{habit.name}</div>
+            <div key={habit.name}>{habit.name}</div>
           ))}
         </div>
         {daysArray.map((day: number) => (
-          <>
-            <div className="grid grid-flow-row" style={{width: '20px'}}>
+          <div key={day}>
+            <div className="grid grid-flow-row gap-2" style={{width: '20px'}}>
               <div>{day + 1}</div>
               <div>
                 {moment(
@@ -93,16 +96,16 @@ const CalendarViewMap: React.FC<{ month: string; year: string }> = async ({
               </div>
               {habits.map((habit: any) => (
                 <div
-                  key={habit.habit_id}
+                  key={habit.identifier}
                   className={`${
-                    habitChecksMap[day + 1]?.includes(habit.habit_id)
+                    habitChecksMap[day + 1]?.includes(habit.identifier)
                       ? classes.checked
                       : classes.unchecked
                   } ${day + 1 > moment().date() && moment().format("MM") === month  ? classes.disabled : ""}`}
                 ></div>
               ))}
             </div>
-          </>
+          </div>
         ))}
       </div>
     </Card>

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { ObjectId } from "mongodb";
 import { Habit, HabitCheck } from "@/types";
+import moment from "moment";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -166,6 +167,63 @@ export async function getHabitChecksByDateAction(date: string) {
     const habitChecks = await habitChecksDb.find({ date: date }).toArray()
 
     return new Promise((resolve, reject) => {   
+        if (habitChecks) {
+            const habitMap : HabitCheck[] = habitChecks.map((check) => {
+                return {
+                    date: check.date,
+                    habit_id: check.habit_id,
+                    notes: check.notes
+                }
+            })
+            resolve(JSON.stringify({ status: 200, data: habitMap }))
+        } else {
+            reject(new Error("Cannot fetch habit checks."))
+        }
+    })
+}
+
+
+/**
+ * 
+ * @param month string
+ * @param year string
+ * @returns list of habit checks for the month provided. Habit[]
+ */
+export async function getHabitChecksByMonthAction(month: string, year: string) {
+    if (!month) {
+        return { message: "Month is required" }
+    }
+    if (!year) {
+        return { message: "Year is required" }
+    }
+    const db = client.db('habit_tracker');
+    const habitChecksDb = db.collection('habitChecks');
+    
+    const habitChecks = await habitChecksDb.find({ date: { $regex: `^${year}-${month}` } }).toArray()
+
+
+    return new Promise((resolve, reject) => {
+        if (habitChecks) {
+            const habitMap : HabitCheck[] = habitChecks.map((check) => {
+                return {
+                    date: check.date,
+                    habit_id: check.habit_id,
+                    notes: check.notes
+                }
+            })
+            resolve(JSON.stringify({ status: 200, data: habitMap }))
+        } else {
+            reject(new Error("Cannot fetch habit checks."))
+        }
+    })
+}
+
+export async function getAllHabitChecksAction() {
+    const db = client.db('habit_tracker');
+    const habitChecksDb = db.collection('habitChecks');
+    const habitChecks = await habitChecksDb.find().toArray()
+
+    return new Promise((resolve, reject) => {
         if (habitChecks) {
             const habitMap : HabitCheck[] = habitChecks.map((check) => {
                 return {
