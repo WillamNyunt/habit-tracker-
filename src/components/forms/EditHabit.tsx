@@ -1,5 +1,5 @@
 import { useFormState } from "react-dom";
-import { editHabitAction, getHabitByIdAction } from "@/lib/actions";
+import { editHabitAction, getHabitByIdentifierAction } from "@/lib/actions";
 import { Suspense, useEffect, useRef } from "react";
 import React from "react";
 import { useSearchParams } from "next/navigation";
@@ -11,7 +11,6 @@ interface EditHabitFormProps {
 interface Habits {
   name: string;
   id: string;
-  slug: string;
   time_of_day: string;
 }
 
@@ -28,17 +27,18 @@ const EditHabitForm: React.FC<EditHabitFormProps> = (props) => {
 
   useEffect(() => {
     async function fetchHabit() {
-      const habit = (await getHabitByIdAction(id)) as Habits;
-      console.log(habit)
-      if (!habit) {
-        return;
-      } 
-      if (nameInputRef.current) {
-        nameInputRef.current.value = habit.name;
-      }
-      if (timeOfDayInputRef.current) {
-        timeOfDayInputRef.current.value = habit.time_of_day ? habit.time_of_day : "all";
-      }
+      await getHabitByIdentifierAction(id).then((res: unknown) => {
+        const response = JSON.parse(res as string);
+        const habit: Habits = response.data;
+        if (nameInputRef.current) {
+          nameInputRef.current.value = habit.name;
+        }
+        if (timeOfDayInputRef.current) {
+          timeOfDayInputRef.current.value = habit.time_of_day ? habit.time_of_day : "all";
+        }
+      }).catch((err) => {
+        console.error(err);
+      });
     }
     fetchHabit();
   }, [id]);
