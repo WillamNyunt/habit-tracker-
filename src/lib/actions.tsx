@@ -4,7 +4,7 @@ import client from "@/lib/clientPromise";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { ObjectId } from "mongodb";
-import { Habit } from "@/types";
+import { Habit, HabitCheck } from "@/types";
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -116,7 +116,6 @@ export async function checkHabitFormAction(prevState: { message: string }, formD
         date: formData.get('date') as string,
         habit_id: formData.get('habit_id') as string,
         notes: '' as string,
-        revalidatePath: formData.get('revalidatePath') as string
     }
 
     if (!data.habit_id) {
@@ -131,8 +130,9 @@ export async function checkHabitFormAction(prevState: { message: string }, formD
     const habitChecks = db.collection('habitChecks');
     await habitChecks.insertOne(data).then(res => console.log(res)).catch(err => console.log(err))
 
-    revalidatePath(data.revalidatePath)
-    redirect(data.revalidatePath)
+    const path = formData.get('revalidatePath') as string
+    revalidatePath(path)
+    redirect(path)
 }
 
 export async function getDateIdByDateAction(date: string) {
@@ -160,5 +160,24 @@ export async function getHabitChecksByDateAction(date: string) {
     if (!date.match(/^\d{4}-\d{2}-\d{2}$/)) {
         return { message: "Date format is incorrect" }
     }
+    const db = client.db('habit_tracker');
+    const habitChecksDb = db.collection('habitChecks');
+
+    const habitChecks = await habitChecksDb.find({ date: date }).toArray()
+
+    return new Promise((resolve, reject) => {   
+        if (habitChecks) {
+            const habitMap : HabitCheck[] = habitChecks.map((check) => {
+                return {
+                    date: check.date,
+                    habit_id: check.habit_id,
+                    notes: check.notes
+                }
+            })
+            resolve(JSON.stringify({ status: 200, data: habitMap }))
+        } else {
+            reject(new Error("Cannot fetch habit checks."))
+        }
+    })
 }
 

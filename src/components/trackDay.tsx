@@ -5,7 +5,6 @@ import HabitCheckColumn from "./habitCheckColumn";
 import moment from "moment";
 import DatePicker from "./ui/datePicker";
 import { Suspense } from "react";
-import { Habit } from "@/types";
 import { timeOfDayConfig } from "@/lib/config";
 import { getDateTitle } from "@/app/util";
 

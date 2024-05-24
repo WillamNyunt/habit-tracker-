@@ -13,3 +13,9 @@ export interface TimeOfDay {
     habits: Habit[];
     time_of_day: string;
 }
+
+export interface HabitCheck {
+    habit_id: string;
+    check_date: string;
+    notes: string;
+}
