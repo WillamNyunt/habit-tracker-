@@ -1,6 +1,6 @@
 import React from "react";
 import ColourfulTitle from "./ui/colourfulTitle";
-import { getHabits } from "@/lib/habits";
+import { getHabitsAction } from "@/lib/actions";
 import HabitCheckColumn from "./habitCheckColumn";
 import moment from "moment";
 import DatePicker from "./ui/datePicker";
@@ -21,7 +21,7 @@ interface TrackDayProps {
 const TrackDay: React.FC<TrackDayProps> = async ({date}) => {
   let timeOfDay = timeOfDayConfig;
 
-  const habits = (await getHabits()) as Habit[];
+  const habits = await getHabitsAction();
   timeOfDay = timeOfDay.map((time) => {
     time.habits = habits.filter((habit) => habit.time_of_day === time.time_of_day);
     return time;
