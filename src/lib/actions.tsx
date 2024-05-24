@@ -1,13 +1,16 @@
 'use server'
 
-import client  from "@/lib/clientPromise";
-
-import { saveHabitDb, editHabitDb, getHabitById, deleteHabitDb, getHabits, addDateToHabit, getDateIdByDate, getHabitChecksByDate } from "./habits"
+import client from "@/lib/clientPromise";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { ObjectId } from "mongodb";
+import { Habit } from "@/types";
+const { v4: uuidv4 } = require('uuid');
 
-export async function addHabitAction(prevState : {message : string}, formData : FormData) {
+
+export async function addHabitAction(prevState: { message: string }, formData: FormData) {
     const data = {
+        identifier: uuidv4() as string,
         name: formData.get('name') as string,
         time_of_day: formData.get('time_of_day') as string
     }
@@ -18,17 +21,17 @@ export async function addHabitAction(prevState : {message : string}, formData : 
 
     const db = client.db('habit_tracker');
     const habits = db.collection('habits');
-    
+
     await habits.insertOne(data)
 
     revalidatePath('/habits')
     redirect('/habits')
 }
 
-export async function editHabitAction(prevState : {message : string}, formData : FormData) {
+export async function editHabitAction(prevState: { message: string }, formData: FormData) {
     const data = {
         name: formData.get('name') as string,
-        id: formData.get('id') as string,
+        identifier: formData.get('id') as string,
         time_of_day: formData.get('time_of_day') as string
     }
 
@@ -38,17 +41,41 @@ export async function editHabitAction(prevState : {message : string}, formData :
         return { message: "Name is required" }
     }
 
-    await editHabitDb(data)
+    const db = client.db('habit_tracker');
+    const habits = db.collection('habits');
+
+    await habits.updateOne({ identifier: data.identifier }, { $set: { name: data.name, time_of_day: data.time_of_day } }).then(
+        (result) => {
+            console.log(result)
+        }
+    ).catch((err) => {
+        console.log(err)
+    })
 
     revalidatePath('/habits')
     redirect('/habits')
 }
 
-export async function getHabitByIdAction(id: string) {
-    if (!id) {
+export async function getHabitByIdentifierAction(identifier: string) {
+    console.log(identifier)
+    if (!identifier) {
         return { message: "Id is required" }
     }
-    return await getHabitById(id)
+    const db = client.db('habit_tracker');
+    const habits = db.collection('habits');
+    const res = await habits.findOne({ identifier: identifier });
+    return new Promise((resolve, reject) => {
+        if (res) {
+            const habit = {
+                identifier: res.identifier,
+                name: res.name,
+                time_of_day: res.time_of_day
+            }
+            resolve(JSON.stringify({ status: 200, data: habit }))
+        } else {
+            reject(new Error("Habit not found"))
+        }
+    })
 }
 
 export async function getHabitsAction() {
@@ -56,24 +83,35 @@ export async function getHabitsAction() {
     const habits = db.collection('habits');
     const habitList = await habits.find().toArray();
 
-    console.log(habitList)
-    return {
-        status: 200,
-        body: habitList
+    if (!habitList) {
+        return { message: "No habits found" }
     }
+
+
+    const habitsObj: Habit[] = habitList.map(habit => {
+        return {
+            identifier: habit.identifier,
+            name: habit.name,
+            time_of_day: habit.time_of_day
+        }
+    })
+
+    return habitsObj
 }
 
-export async function deleteHabitByIdAction(id: string) : Promise<{ message: string | null }> {
-    if (!id) {
+export async function deleteHabitByIdAction(identifier: string): Promise<{ message: string | null }> {
+    if (!identifier) {
         return { message: "Id is required" }
     }
-    await deleteHabitDb(id)
+    const db = client.db('habit_tracker');
+    const habits = db.collection('habits');
+    await habits.deleteOne({ identifier: identifier }).then(res => console.log(res)).catch(err => console.log(err))
     revalidatePath('/habits')
     redirect('/habits')
 }
 
 
-export async function checkHabitFormAction(prevState : {message : string}, formData : FormData) {
+export async function checkHabitFormAction(prevState: { message: string }, formData: FormData) {
     const data = {
         date: formData.get('date') as string,
         habit_id: formData.get('habit_id') as string,
@@ -89,7 +127,9 @@ export async function checkHabitFormAction(prevState : {message : string}, formD
         return { message: "Date format is incorrect" }
     }
 
-    await addDateToHabit(data)
+    const db = client.db('habit_tracker');
+    const habitChecks = db.collection('habitChecks');
+    await habitChecks.insertOne(data).then(res => console.log(res)).catch(err => console.log(err))
 
     revalidatePath(data.revalidatePath)
     redirect(data.revalidatePath)
@@ -98,11 +138,14 @@ export async function checkHabitFormAction(prevState : {message : string}, formD
 export async function getDateIdByDateAction(date: string) {
     if (!date) {
         return { message: "Date is required" }
-    } 
+    }
     if (!date.match(/^\d{4}-\d{2}-\d{2}$/)) {
         return { message: "Date format is incorrect" }
     }
-    return await getDateIdByDate(date)
+    const db = client.db('habit_tracker');
+    const dates = db.collection('dates');
+    const dateObj = await dates.findOne({ date: date });
+    return dateObj;
 }
 
 /**
@@ -117,5 +160,5 @@ export async function getHabitChecksByDateAction(date: string) {
     if (!date.match(/^\d{4}-\d{2}-\d{2}$/)) {
         return { message: "Date format is incorrect" }
     }
-    return await getHabitChecksByDate(date)
 }
+
