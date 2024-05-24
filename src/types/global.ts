@@ -1,7 +1,8 @@
+import { ObjectId } from "mongodb";
+
 export interface Habit {
+    identifier: string;
     name: string;
-    id: string;
-    slug: string;
     time_of_day: string;
   }
 
