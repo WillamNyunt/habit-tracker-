@@ -10,6 +10,11 @@ export const habitColors = {
 
 export const habitTitleColor = '#FFFFFF'; // White for text color of habit title
 
+
+/**
+ * Configuration for time of day
+ * This is used to group habits by time of day
+ */
 export const timeOfDayConfig: TimeOfDay[] = [
     {
       title: "Morning",
