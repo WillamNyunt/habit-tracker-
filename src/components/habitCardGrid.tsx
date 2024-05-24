@@ -3,22 +3,21 @@ import { getHabitsAction } from "@/lib/actions";
 import DeleteBtn from "./deleteBtn";
 import { deleteHabitByIdAction } from "@/lib/actions";
 import Card from "@/components/ui/card";
-
+import { Habit } from "@/types";
 
 async function Habits() {
-  const res: any = await getHabitsAction();
-  const habits = res.body;
+  const habits = await getHabitsAction();
   return (
     <div className="grid grid-cols-3 gap-2">
-      {habits.length != 0 && habits.map((habit: any) => (
-        <Card key={habit.habit_id} className="flex align-middle">
+      {(Array.isArray(habits) && habits.length !== 0) && habits.map((habit: Habit) => (
+        <Card key={habit.identifier} className="flex align-middle">
           <div className="flex justify-between w-full">
             <span className="flex items-center">{habit.name}</span>
             <div className="flex justify-end">
-              <Link href={`?modal=true&type=edit-habit&id=${habit.habit_id}`}>
+              <Link href={`?modal=true&type=edit-habit&id=${habit.identifier}`}>
                 <button className="button-primary">Edit</button>
               </Link>
-              <DeleteBtn deleteFn={deleteHabitByIdAction} id={habit.habit_id} />
+              <DeleteBtn deleteFn={deleteHabitByIdAction} id={habit.identifier} />
             </div>
           </div>
         </Card>
