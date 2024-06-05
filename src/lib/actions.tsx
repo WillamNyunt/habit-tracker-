@@ -9,7 +9,7 @@ import moment from "moment";
 const { v4: uuidv4 } = require('uuid');
 
 
-export async function addHabitAction(prevState: { message: string }, formData: FormData) {
+export async function addHabitAction(formData: FormData) {
     const data = {
         identifier: uuidv4() as string,
         name: formData.get('name') as string,
