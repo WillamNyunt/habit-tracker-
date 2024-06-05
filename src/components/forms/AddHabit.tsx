@@ -1,14 +1,24 @@
+import { AddHabitBtn } from './AddHabitBtn';
 import { useFormState } from "react-dom";
 import { addHabitAction } from "@/lib/actions";
+import { useState } from "react";
 
 interface AddHabitFormProps {
   handleModalClose: () => void;
 }
 
 export default function AddHabitForm(props: AddHabitFormProps) {
-  const [state, formAction] = useFormState(addHabitAction, { message: "" });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const formAction = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    await addHabitAction(new FormData(e.target as HTMLFormElement));
+    setIsLoading(false);
+  }
+
   return (
-    <form className="flex flex-col gap-3 w-full" action={formAction}>
+    <form className="flex flex-col gap-3 w-full" onSubmit={formAction}>
       <h2>Add habit</h2>
       <label htmlFor="name">Name</label>
       <input type="text" name="name" placeholder="Name" />
@@ -19,16 +29,16 @@ export default function AddHabitForm(props: AddHabitFormProps) {
         <option value="afternoon">Afternoon</option>
         <option value="evening">Evening</option>
       </select>
-      {state?.message && <p>{state.message}</p>}
       <div className="flex justify-between mt-3">
-      <button
-        type="button"
-        className="bg-slate-800 text-white p-2 rounded-md"
-        onClick={props.handleModalClose}
-      >
+      <button type="button" className="bg-slate-800 text-white p-2 rounded-md" onClick={props.handleModalClose}>
         Close
       </button>
-      <button>Create</button>
+      <button
+        type="submit"
+        disabled={isLoading}
+      >
+        {isLoading ? "Adding..." : "Add"}
+      </button>
       </div>
     </form>
   );
